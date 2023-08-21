@@ -4,12 +4,14 @@ executors:
   node-executor:
     docker:
       - image: cimg/node:16.20.0
-  resource_class: small
+  resource_class: medium
 jobs:
   install_dependencies:
     executor: node-executor
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Install Dependencies
           command: npm install
@@ -22,6 +24,8 @@ jobs:
     executor: node-executor
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       # - restore_cache:
       #     key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
