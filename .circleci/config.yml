@@ -4,7 +4,7 @@ executors:
   node-executor:
     docker:
       - image: cimg/node:16.20.0
-
+  resource_class: small
 jobs:
   install_dependencies:
     executor: node-executor
