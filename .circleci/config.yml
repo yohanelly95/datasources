@@ -4,21 +4,21 @@ executors:
   node-executor:
     docker:
       - image: cimg/node:16.20.0
-  resource_class: small
+    resource_class: small
 jobs:
-  install_dependencies:
-    executor: node-executor
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
+  # install_dependencies:
+  #   executor: node-executor
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: .
+  #     - run:
+  #         name: Install Dependencies
+  #         command: npm install
+  #     - save_cache:
+  #         key: dependency-cache-{{ checksum "package-lock.json" }}
+  #         paths:
+  #           - ./node_modules
 
   test:
     executor: node-executor
@@ -26,17 +26,15 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Run Tests
-          command: npm run test
+          command: npm i && npm run test
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - install_dependencies
+      # - install_dependencies
       - test:
-          requires:
-            - install_dependencies
+          # requires:
+          #   - install_dependencies
