@@ -22,10 +22,6 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y openvpn openvpn-systemd-resolved
-      - name: List directory contents
-        run: |
-          echo "OVPN_USERNAME: $(echo '${{ secrets.OVPN_USERNAME }}' | base64)"
-          echo "OVPN_PASSWORD: ${{ secrets.OVPN_PASSWORD }}"
       - name: Connect to VPN
         uses: kota65535/github-openvpn-connect-action@v2
         with:
